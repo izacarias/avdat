@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"req",
+				"request"
+			],
+			[
+				"ver",
+				"verbose_name"
+			],
+			[
+				"vers",
+				"verbose_name_plural"
+			],
+			[
+				"Se",
+				"SeriesPais"
+			],
+			[
 				"vie",
 				"views"
 			],
@@ -80,6 +96,14 @@
 	},
 	"file_history":
 	[
+		"/var/www/html/django-proj/avdat/acidentes/views.py",
+		"/var/www/html/django-proj/avdat/avdat/urls.py",
+		"/var/www/html/django-proj/avdat/avdat/settings.py",
+		"/var/www/html/django-proj/avdat/acidentes/models.py",
+		"/var/www/html/django-proj/avdat/acidentes/admin.py",
+		"/var/www/html/django-proj/avdat/acidentes/urls.py",
+		"/var/www/html/django-proj/avdat/acidentes/templates/acidentes/index.html",
+		"/home/iulisloi/Downloads/acidentes_trab/series_brasil.xls",
 		"/var/www/html/django_proj/avdat/avdat/settings.py",
 		"/var/www/html/django_proj/avdat/acidentes/models.py",
 		"/home/iulisloi/.config/sublime-text-3/Packages/Djaneiro/Settings/Python (Django).sublime-settings",
@@ -133,11 +157,11 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 50.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 		]
@@ -147,6 +171,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"static",
+			",",
 			"update",
 			"id=",
 			"#",
@@ -160,6 +186,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			".",
 			", ",
 			",",
 			", "
@@ -184,7 +211,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{
@@ -216,7 +243,7 @@
 	"project": "avdat.sublime-project",
 	"replace":
 	{
-		"height": 46.0
+		"height": 94.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -254,7 +281,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 165.0,
+	"side_bar_width": 204.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
