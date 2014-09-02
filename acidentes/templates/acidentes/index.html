@@ -1,0 +1,184 @@
+<html >
+	<head>
+        <title>AVDAT</title>		
+        <meta charset="UTF-8">
+		<link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+		<link href="styles.css" rel='stylesheet' type='text/css'/>
+    </head>
+	<body class="body">
+		<div class="container">
+			<div class="row" style="text-align: left">
+				<div class="col-xs-3 nopadding semborda" style="text-align: left">            
+					<a href="index.html"> <img  src="images/logo3.png" height="80" width="160"/></a>
+				</div>
+				<div class="col-xs-5 col-xs-offset-0 nopadding semborda" style="text-align: center">            
+					<h2><strong>AVDAT</strong></h2>
+				</div>
+				<div class="col-xs-4 col-xs-offset-0 nopadding semborda" style="text-align: center">            					
+					<div class="nopaddingbotoes">
+					
+								<a href="informacao.html" class="ab-boton">Informações</a>
+								<a href="contato.html" class="ab-boton">Contato</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row" style="text-align: center">
+				<div class="col-xs-12 col-xs-offset-0 nopadding" style="text-align: center">            
+					<div align="center" class="account-wall" style="text-align: center; background-color: #C0D9D9">					
+						<div class="row" style="text-align: center">				  				   
+							<div class="col-xs-1 col-sm-4" style="text-align: center">														 
+									<label>
+									 <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_0" />
+									 Estado </label>&nbsp;&nbsp;&nbsp;&nbsp;
+									 
+									<label>
+									 <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_1" />
+									 Região </label>&nbsp;&nbsp;&nbsp;&nbsp;
+									 
+									<label>
+									 <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_2" />
+									 Município </label>
+							</div>
+							<div class="col-xs-2 col-sm-1" style="text-align: center"> 
+									<select >
+										<option>Dados</option>
+										<option>Dados</option>
+										<option>Dados</option>
+										<option>Dados</option>
+										<option>Dados</option>
+									</select>													
+							</div>
+							
+							<div class="col-xs-2 col-sm-1" style="text-align: center">						
+									<select >
+										<option>2008</option>
+										<option>2009</option>
+										<option>2010</option>
+										<option>2011</option>
+										<option>2012</option>
+									</select>
+							</div>
+																			
+							<div class="col-xs-2 col-sm-4" style="text-align: center">						
+								<button> visualizar</button>
+							</div>
+							
+						</div>
+					</div>            
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="container">
+			<div class="row" style="text-align: center">
+				<div class="col-xs-6 col-xs-offset-0 nopadding" style="text-align: center" id="chart_div">            
+					<div align="center" class="account-wall" style="text-align: center; background-color: #C0D9D9">					
+						<div class="row" style="text-align: center">	
+							
+						</div>
+					</div>            
+				</div>
+				<div class="col-xs-6 col-xs-offset-0 nopadding" style="text-align: center" id="regions_div">            
+					<div align="center" class="account-wall" style="text-align: center; background-color: #C0D9D9">					
+						<div class="row" style="text-align: center">
+							<div style="width: 400px; height: 250px;">	  
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br><br>
+		<div class="container">
+			<div class="row">
+				<div id="map_canvas" class="col-xs-12 col-xs-offset-0">            				
+				</div>
+			</div>
+		</div>
+		<br>
+		<hr/>
+		<div class="container">
+			<div class="row" style="text-align: center">
+				<div class="col-xs-12 nopadding " style="text-align: center">            
+					<footer>CESNORS Campus de Frederico Westphalen @ 2014</footer>
+				</div>
+			</div>
+		</div>
+		<script src="https://maps.googleapis.com/maps/api/js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/JavaScript" src="js/sha512.js"></script> 
+        <script type="text/JavaScript" src="js/forms.js"></script> 
+		<script>
+		  function initialize() {
+			var mapCanvas = document.getElementById('map_canvas');
+			var mapOptions = {
+			  center: new google.maps.LatLng(-13.433010, -49.800219),
+			  zoom: 4,
+			  mapTypeId: google.maps.MapTypeId.ROADMAP
+			}
+			var map = new google.maps.Map(mapCanvas, mapOptions);
+		  }
+		  google.maps.event.addDomListener(window, 'load', initialize);
+		</script>
+		<script type="text/javascript">
+
+		  // Load the Visualization API and the piechart package.
+		  google.load('visualization', '1.0', {'packages':['corechart']});
+
+		  // Set a callback to run when the Google Visualization API is loaded.
+		  google.setOnLoadCallback(drawChart);
+
+		  // Callback that creates and populates a data table,
+		  // instantiates the pie chart, passes in the data and
+		  // draws it.
+		  function drawChart() {
+
+			// Create the data table.
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Topping');
+			data.addColumn('number', 'Slices');
+			data.addRows([
+			  ['Rio Grande do Sul', 2],
+			  ['Santa Catarina', 2],
+			  ['Parana', 1],
+			  ['São Paulo', 1],
+			  ['Rio de Janeiro', 2],
+			  ['Mato Grosso',1],
+			  ['Distrito Federal',1]
+			]);
+
+			// Set chart options
+			var options = {'title':'Acidentes de trabalho',
+						   'width':400,
+						   'height':300};
+
+			// Instantiate and draw our chart, passing in some options.
+			var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+		  }
+		</script>
+			<script type="text/javascript">
+			  google.load("visualization", "1", {packages:["corechart"]});
+			  google.setOnLoadCallback(drawChart);
+			  function drawChart() {
+				var data = google.visualization.arrayToDataTable([
+				  ['Year', 'Brasil', 'Dado'],
+				  ['2004',  1000,      400],
+				  ['2005',  1170,      460],
+				  ['2006',  660,       1120],
+				  ['2007',  1030,      540]
+				]);
+
+				var options = {
+				  title: 'Company Performance'
+				};
+
+				var chart = new google.visualization.LineChart(document.getElementById('regions_div'));
+
+				chart.draw(data, options);
+			  }
+			</script>
+	</body>
+</html>
