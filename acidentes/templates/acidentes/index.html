@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 <!doctype html>
+=======
+<!doctype html>{% load staticfiles %}
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 <html>
 	<head>
         <title>AVDAT</title>		
         <meta charset="UTF-8">
+<<<<<<< HEAD
 		<link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
 		<link href="styles.css" rel='stylesheet' type='text/css'/>
     </head>
@@ -14,12 +19,30 @@
 				</div>
 				<div class="col-xs-5 col-xs-offset-0 nopadding semborda" style="text-align: center">            
 					<h2><strong>AVDAT</strong></h2>
+=======
+		<link href="{% static "acidentes/css/bootstrap.min.css" %}" rel='stylesheet' type='text/css'/>
+		<link href="{% static "acidentes/styles.css" %}" rel='stylesheet' type='text/css'/>
+    </head>
+	<body background="{% static "acidentes/images/teste12.jpeg" %}">
+		<div class="container">
+			<div class="row" style="text-align: left">
+				<div class="col-xs-3 nopadding semborda" style="text-align: left">            
+					<a href="index.html"> <img  src="{% static "acidentes/images/logo3.png" %}" height="80" width="160"/></a>
+				</div>
+				<div class="col-xs-5 col-xs-offset-0 nopadding semborda titulopag" style="text-align: center">            
+					<strong>APLICAÇÃO PARA VISUALIZAÇÃO DE ACIDENTES DE TRABALHO</strong>
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 				</div>
 				<div class="col-xs-4 col-xs-offset-0 nopadding semborda" style="text-align: center">            					
 					<div class="nopaddingbotoes">
 					
+<<<<<<< HEAD
 								<a href="informacao.html" class="ab-boton">Informações</a>
 								<a href="contato.html" class="ab-boton">Contato</a>
+=======
+								<a href="voce_sabia.html" class="ab-boton">Você sabia ?</a>
+								<a href="equipe.html" class="ab-boton">Equipe</a>
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 					</div>
 				</div>
 			</div>
@@ -99,6 +122,7 @@
 			</div>
 		</div>
 		<br>
+<<<<<<< HEAD
 		<hr/>
 		<div class="container">
 			<div class="row" style="text-align: center">
@@ -111,6 +135,19 @@
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/JavaScript" src="js/sha512.js"></script> 
         <script type="text/JavaScript" src="js/forms.js"></script> 
+=======
+		<hr/>       
+		<footer>
+			<div>
+				<p align="center"> UFSM Campus de Frederico Westphalen @ 2014</p>
+			</div>
+		</footer>
+				
+		<script src="https://maps.googleapis.com/maps/api/js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/JavaScript" src="{% static "acidentes/js/sha512.js" %}"></script> 
+        <script type="text/JavaScript" src="{% static "acidentes/js/forms.js" %}"></script> 
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 		<script>
 		  function initialize() {
 			var mapCanvas = document.getElementById('map_canvas');
@@ -165,7 +202,11 @@
 			  google.setOnLoadCallback(drawChart);
 			  function drawChart() {
 				var data = google.visualization.arrayToDataTable([
+<<<<<<< HEAD
 				  ['Year', 'Brasil', 'Dado'],
+=======
+				  ['Ano', 'Brasil', 'Dado'],
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 				  ['2008',  1000,      400],
 				  ['2009',  1170,      460],
 				  ['2010',  660,       1120],
@@ -174,7 +215,11 @@
 				]);
 
 				var options = {
+<<<<<<< HEAD
 				  title: 'Company Performance'
+=======
+				  title: 'Acidentes por ano (por 1000 segurados)'
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 				};
 
 				var chart = new google.visualization.LineChart(document.getElementById('regions_div'));

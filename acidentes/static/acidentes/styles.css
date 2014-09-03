@@ -1,5 +1,9 @@
 .body {
 	background-color: #E0EFF1;	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 }
 .form-signin
 {
@@ -79,6 +83,13 @@
     display: block;
     margin-top: 10px;
 }
+<<<<<<< HEAD
+=======
+.titulopag{
+padding-top:30px;
+font-family:Cambria;
+}
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 .nopaddingbotoes{
 padding-top:13px;
 }
@@ -121,7 +132,10 @@ background-image: linear-gradient( #58ACFA, #58ACFA);
 -o-transition:0.5s;
 transition: 0.5s;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 .ab-boton:hover {
 box-shadow: 0 4px 1px rgba(0,0,0,.19),inset 0 -3px 0 rgba(0,0,0,.19);
 text-decoration: none;
@@ -130,10 +144,13 @@ text-decoration: none;
 .ab-boton:active, .ab-boton:focus {
 box-shadow: inset 0 2px 0 0 rgba(0,0,0,.19),inset 0 12px 24px 6px rgba(0,0,0,.19),inset 0 0 2px 2px rgba(0,0,0,.19);
 }
+<<<<<<< HEAD
 .Titulo{
 
 
 }
+=======
+>>>>>>> 970d357bdf9c5f0dd651772fb655e57eca5c9c70
 
 #map_canvas {
 	width: 100%;
