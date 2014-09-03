@@ -1,15 +1,16 @@
-<html >
+<!doctype html>{% load staticfiles %}
+<html>
 	<head>
         <title>AVDAT</title>		
         <meta charset="UTF-8">
-		<link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
-		<link href="styles.css" rel='stylesheet' type='text/css'/>
+		<link href="{% static "acidentes/css/bootstrap.min.css" %}" rel='stylesheet' type='text/css'/>
+		<link href="{% static "acidentes/styles.css" %}" rel='stylesheet' type='text/css'/>
     </head>
-	<body background="images/teste12.jpeg">
+	<body background="{% static "acidentes/images/teste12.jpeg" %}">
 		<div class="container">
 			<div class="row" style="text-align: left">
 				<div class="col-xs-3 nopadding semborda" style="text-align: left">            
-					<a href="index.html"> <img  src="images/logo3.png" height="80" width="160"/></a>
+					<a href="index.html"> <img  src="{% static "acidentes/images/logo3.png" %}" height="80" width="160"/></a>
 				</div>
 				<div class="col-xs-5 col-xs-offset-0 nopadding semborda titulopag" style="text-align: center">            
 					<strong>APLICAÇÃO PARA VISUALIZAÇÃO DE ACIDENTES DE TRABALHO</strong>
@@ -107,8 +108,8 @@
 				
 		<script src="https://maps.googleapis.com/maps/api/js"></script>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/JavaScript" src="js/sha512.js"></script> 
-        <script type="text/JavaScript" src="js/forms.js"></script> 
+        <script type="text/JavaScript" src="{% static "acidentes/js/sha512.js" %}"></script> 
+        <script type="text/JavaScript" src="{% static "acidentes/js/forms.js" %}"></script> 
 		<script>
 		  function initialize() {
 			var mapCanvas = document.getElementById('map_canvas');
@@ -163,7 +164,7 @@
 			  google.setOnLoadCallback(drawChart);
 			  function drawChart() {
 				var data = google.visualization.arrayToDataTable([
-				  ['Year', 'Brasil', 'Dado'],
+				  ['Ano', 'Brasil', 'Dado'],
 				  ['2008',  1000,      400],
 				  ['2009',  1170,      460],
 				  ['2010',  660,       1120],
@@ -172,7 +173,7 @@
 				]);
 
 				var options = {
-				  title: 'Company Performance'
+				  title: 'Acidentes por ano (por 1000 segurados)'
 				};
 
 				var chart = new google.visualization.LineChart(document.getElementById('regions_div'));
