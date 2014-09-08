@@ -13,12 +13,12 @@
 					<a href="index.html"> <img  src="{% static "acidentes/images/logo3.png" %}" height="80" width="160"/></a>
 				</div>
 				<div class="col-xs-5 col-xs-offset-0 nopadding semborda titulopag" style="text-align: center">
-					<strong>APLICAÇÃO PARA VISUALIZAÇÃO DE ACIDENTES DE TRABALHO</strong>
+					<strong>Aplicação para visualização de acidentes de trabalho</strong>
 				</div>
 				<div class="col-xs-4 col-xs-offset-0 nopadding semborda" style="text-align: center">            		
 					<div class="nopaddingbotoes">
-						<a href="voce_sabia.html" class="ab-boton">Você sabia ?</a>
-						<a href="equipe.html" class="ab-boton">Equipe</a>
+						<a href="voce_sabia" class="ab-boton">Você sabia ?</a>
+						<a href="equipe" class="ab-boton">Equipe</a>
 					</div>
 				</div>
 			</div>
@@ -112,7 +112,7 @@
         <script type="text/javascript" src="{% static "acidentes/js/highcharts.js" %}"></script>
         <script type="text/javascript" src="{% static "acidentes/js/dark-blue.js" %}"></script>
         {% load chartit %}
-		{{ weatherchart|load_charts:"chart_div" }}
+		{{ charts|load_charts:"chart_div" }}
 		<script>
 		  function initialize() {
 			var mapCanvas = document.getElementById('map_canvas');

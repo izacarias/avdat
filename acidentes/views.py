@@ -6,8 +6,8 @@ from acidentes.models import SeriesPais
 
 
 def index(request):
-	#Step 1: Create a DataPool with the data of graph
-    weatherdata = DataPool(
+	# Step 1: Cria o DataPool para a série Acidentes / Ano
+    acidentes_ano_data = DataPool(
 		series= [{
 			'options': {
            		'source': SeriesPais.objects.all()
@@ -18,9 +18,9 @@ def index(request):
             ]
 		}]
 	)
-    #Step 2: Create the Chart object
+    #Step 2: Cria o gráfico de barras para série Acidentes / Ano
     acidPais = Chart(
-	    datasource = weatherdata,
+	    datasource = acidentes_ano_data,
 	    series_options = [{
 	    	'options':{
 	          'type': 'column',
@@ -34,6 +34,9 @@ def index(request):
 	    	'title': {
 	           'text': 'Acidentes de Trabalho no Brasil'
 	        },
+	        'legend': {
+	        	'enabled': False
+	        },
 	       	'xAxis': {
 	            'title': {'text': 'Ano'}
 	        },
@@ -42,5 +45,11 @@ def index(request):
 	        }
 	    }
 	)
-    #Step 3: Send the chart object to the template.
-    return render_to_response('acidentes/index.html', {'weatherchart': acidPais})
+    # Renderiza o HTML para a saída
+    return render_to_response('acidentes/index.html', {'charts': acidPais})
+
+def voce_sabia(request):
+	return render_to_response('acidentes/voce_sabia.html')
+
+def equipe(request):
+	return render_to_response('acidentes/equipe.html')
