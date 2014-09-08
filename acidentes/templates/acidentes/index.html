@@ -17,7 +17,7 @@
 				</div>
 				<div class="col-xs-4 col-xs-offset-0 nopadding semborda" style="text-align: center">            		
 					<div class="nopaddingbotoes">
-						<a href="voce_sabia" class="ab-boton">Você sabia ?</a>
+						<a href="voce_sabia" class="ab-boton">Você sabia?</a>
 						<a href="equipe" class="ab-boton">Equipe</a>
 					</div>
 				</div>
@@ -27,7 +27,11 @@
 			<div class="row" style="text-align: center">
 				<div class="col-xs-12 col-xs-offset-0 nopadding" style="text-align: center">            
 					<div align="center" class="account-wall" style="text-align: center; background-color: #B1BEC1">					
-						<div class="row" style="text-align: center">				  				   
+						<div class="row" style="text-align: center">
+						<form method="POST" action="/acidentes/">{% csrf_token %}
+							{% if erro %}
+							<div class="alert alert-danger col-xs-12" role="alert">Selecione um estado</div>
+							{% endif %}
 							<div class="col-xs-1 col-sm-4" style="text-align: center">														 
 									<label>
 									 <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_0" />
@@ -41,30 +45,18 @@
 									 <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_2" />
 									 Município </label>
 							</div>
-							<div class="col-xs-2 col-sm-1" style="text-align: center"> 
-									<select >
-										<option>Dados</option>
-										<option>Dados</option>
-										<option>Dados</option>
-										<option>Dados</option>
-										<option>Dados</option>
+							<div class="col-xs-4 col-sm-2" style="text-align: center"> 
+									<select name="uf">
+										<option value="selecione">Selecione um estado</option>
+										{% for uf in estados %}
+										<option value="{{uf.sigla}}">{{uf.sigla}}</option>
+										{% endfor %}
 									</select>													
 							</div>
-							
-							<div class="col-xs-2 col-sm-1" style="text-align: center">						
-									<select >
-										<option>2008</option>
-										<option>2009</option>
-										<option>2010</option>
-										<option>2011</option>
-										<option>2012</option>
-									</select>
-							</div>
-																			
 							<div class="col-xs-2 col-sm-4" style="text-align: center">						
-								<button> visualizar</button>
+								<input type="submit" value="Visualizar" />
 							</div>
-							
+						</form>	
 						</div>
 					</div>            
 				</div>
@@ -110,9 +102,8 @@
         <script type="text/javascript" src="{% static "acidentes/js/sha512.js" %}"></script> 
         <script type="text/javascript" src="{% static "acidentes/js/forms.js" %}"></script> 
         <script type="text/javascript" src="{% static "acidentes/js/highcharts.js" %}"></script>
-        <script type="text/javascript" src="{% static "acidentes/js/dark-blue.js" %}"></script>
         {% load chartit %}
-		{{ charts|load_charts:"chart_div" }}
+		{{ charts|load_charts:"chart_div,regions_div" }}
 		<script>
 		  function initialize() {
 			var mapCanvas = document.getElementById('map_canvas');
@@ -125,64 +116,5 @@
 		  }
 		  google.maps.event.addDomListener(window, 'load', initialize);
 		</script>
-		<script type="text/javascript">
-
-		  // Load the Visualization API and the piechart package.
-		  google.load('visualization', '1.0', {'packages':['corechart']});
-
-		  // Set a callback to run when the Google Visualization API is loaded.
-		  google.setOnLoadCallback(drawChart);
-
-		  // Callback that creates and populates a data table,
-		  // instantiates the pie chart, passes in the data and
-		  // draws it.
-		  function drawChart() {
-
-			// Create the data table.
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Topping');
-			data.addColumn('number', 'Slices');
-			data.addRows([
-			  ['Rio Grande do Sul', 2],
-			  ['Santa Catarina', 2],
-			  ['Parana', 1],
-			  ['São Paulo', 1],
-			  ['Rio de Janeiro', 2],
-			  ['Mato Grosso',1],
-			  ['Distrito Federal',1]
-			]);
-
-			// Set chart options
-			var options = {'title':'Acidentes de trabalho',
-						   'width':400,
-						   'height':300};
-
-			// Instantiate and draw our chart, passing in some options.
-			//var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-			//chart.draw(data, options);
-		  }
-		</script>
-			<script type="text/javascript">
-			  google.load("visualization", "1", {packages:["corechart"]});
-			  google.setOnLoadCallback(drawChart);
-			  function drawChart() {
-				var data = google.visualization.arrayToDataTable([
-				  ['Ano', 'Brasil', 'Dado'],
-				  ['2008',  1000,      400],
-				  ['2009',  1170,      460],
-				  ['2010',  660,       1120],
-				  ['2011',  1030,      540],
-				  ['2012',  1500,      1000]
-				]);
-
-				var options = {
-				  title: 'Acidentes por ano (por 1000 segurados)'
-				};
-
-				var chart = new google.visualization.LineChart(document.getElementById('regions_div'));
-
-				chart.draw(data, options);
-			  }
-			</script>
 	</body>
 </html>
