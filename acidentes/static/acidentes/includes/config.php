@@ -1,1 +1,0 @@
-<?php	define("HOST", "mysql.essenceweb.com.br");     	define("USER", "essenceweb01");    	define("PASSWORD", "DownL0grwSup");    	define("DATABASE", "essenceweb01");   	define("CAN_REGISTER", "any");	define("DEFAULT_ROLE", "member");	define("SECURE", TRUE);?>
