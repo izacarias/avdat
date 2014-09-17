@@ -1,32 +1,6 @@
-<!doctype html>{% load staticfiles %}
-<html>
-	<head>
-        <title>Você sabia ?</title>		
-        <meta charset="UTF-8">
-		<link href="{% static "acidentes/css/bootstrap.min.css" %}" rel='stylesheet' type='text/css'/>
-		<link href="{% static "acidentes/styles.css" %}" rel='stylesheet' type='text/css'/>
-    </head>
-	<body background="{% static "acidentes/images/teste12.jpeg" %}">
-		<div class="container">
-			<div class="row" style="text-align: left">
-				<div class="col-xs-3 nopadding semborda" style="text-align: left">            
-					<a href="/acidentes/"> <img src="{% static "acidentes/images/logo3.png" %}" height="80" width="160"/></a>
-				</div>
-				<div class="col-xs-5 col-xs-offset-0 nopadding semborda titulopag" style="text-align: center">            
-					<strong>Aplicação para visualização de acidentes de trabalho</strong>
-				</div>
-				<div class="col-xs-4 col-xs-offset-0 nopadding semborda" style="text-align: center">            			
-					<div class="nopaddingbotoes">
-						<a href="voce_sabia" class="ab-boton">Você sabia?</a>
-						<a href="equipe" class="ab-boton">Equipe</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row" style="text-align: center">
-				<div class="col-xs-12 col-xs-offset-0 nopadding" style="text-align: center" >            
-					<div align="center" class="account-wall" style="text-align: center; background-color: #B1BEC1">					
+{% extends "acidentes/base.html" %}
+
+{% block conteudo %}
 						<div class="row" style="text-align: center">
 							<h4>O que é acidente de trabalho</h4>
 							<ol align ="left">Acidentes de trabalho são aqueles que acontecem no exercício do trabalho prestado à empresa e que provocam lesões corporais ou perturbações funcionais que podem resultar em morte ou na perda ou em redução, permanente ou temporária,
@@ -45,16 +19,4 @@
 									O país perde apenas para China(14.924), Estados Unidos (5.764) e Rússia (3.090).</p>
 							</ol>
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<br></br>
-		<hr/>
-		<footer>
-			<div>
-				<p align="center">UFSM Campus de Frederico Westphalen @ 2014</p>
-			</div>
-		</footer>
-	</body>	
-</html>
+{% endblock conteudo %}

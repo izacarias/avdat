@@ -1,32 +1,6 @@
-<!doctype html>{% load staticfiles %}
-<html>
-	<head>
-        <title>equipe</title>		
-        <meta charset="UTF-8">
-		<link href="{% static "acidentes/css/bootstrap.min.css" %}" rel='stylesheet' type='text/css'/>
-		<link href="{% static "acidentes/styles.css" %}" rel='stylesheet' type='text/css'/>
-    </head>
-	<body background="{% static "acidentes/images/teste12.jpeg" %}">
-		<div class="container">
-			<div class="row" style="text-align: left">
-				<div class="col-xs-3 nopadding semborda" style="text-align: left">            
-					<a href="/acidentes/"> <img src="{% static "acidentes/images/logo3.png" %}" height="80" width="160"/></a>
-				</div>
-				<div class="col-xs-5 col-xs-offset-0 nopadding semborda titulopag" style="text-align: center">            
-					<strong>Aplicação para visualização de acidentes de trabalho</strong>
-				</div>
-				<div class="col-xs-4 col-xs-offset-0 nopadding semborda" style="text-align: center">            			
-					<div class="nopaddingbotoes">
-						<a href="voce_sabia" class="ab-boton">Você sabia?</a>
-						<a href="equipe" class="ab-boton">Equipe</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row" style="text-align: center">
-				<div class="col-xs-12 col-xs-offset-0 nopadding" style="text-align: center">            
-					<div align="center" class="account-wall" style="text-align: center; background-color: #B1BEC1">					
+{% extends "acidentes/base.html" %}
+
+{% block conteudo %}
 						<div class="row" style="text-align: center">				  				   
 							<div class="col-xs-6 col-sm-6" style="text-align: center">					
 									<ul><h4 align="left">Equipe desenvolvedora</h4>
@@ -54,20 +28,4 @@
 									</ul>													
 							</div>	
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>	
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<hr />
-		<footer>
-			<div>
-				<p align="center">UFSM Campus de Frederico Westphalen @ 2014</p>
-			</div>
-		</footer>
-	</body>	
-</html>
+{% endblock %}
