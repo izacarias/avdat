@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+import json
 from django.shortcuts import render, render_to_response, RequestContext
 from django.http import HttpResponse
 from django.core.context_processors import csrf
+from django.utils.funcional import Promise
+from djanto.utils.encoding import force_text
+from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_protect
 from chartit import DataPool, Chart
 from acidentes.models import SeriesPais, SeriesUniaoFederacao, UniaoFederacao
-
 
 def index(request):
     c = {}
@@ -114,6 +117,10 @@ def index(request):
             }
         }
     )
+
+    # dados para o heatmap
+    estados
+
     # Renderiza o HTML para a saída
     # return render_to_response('acidentes/index.html', {'charts': [acidPais, comparacaoChart]})
     return render_to_response('acidentes/index.html', RequestContext(request, {'charts': [acidPais, comparacaoChart], 

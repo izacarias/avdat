@@ -27,6 +27,8 @@ class Regiao(models.Model):
 class UniaoFederacao(models.Model):
 	sigla = models.CharField(max_length=2)
 	nome = models.CharField(max_length=50)
+	latitude = models.DecimalField(max_digits=5, decimal_places=2)
+	longitude = models.DecimalField(max_digits=5, decimal_places=2)
 
 	def __unicode__(self):
 		return self.sigla

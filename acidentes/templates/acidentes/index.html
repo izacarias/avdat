@@ -102,17 +102,35 @@
         <script type="text/javascript" src="{% static "acidentes/js/sha512.js" %}"></script> 
         <script type="text/javascript" src="{% static "acidentes/js/forms.js" %}"></script> 
         <script type="text/javascript" src="{% static "acidentes/js/highcharts.js" %}"></script>
+        <script type="text/javascript" src="{% static "acidentes/js/heatmap.js" %}"></script>
         {% load chartit %}
 		{{ charts|load_charts:"chart_div,regions_div" }}
 		<script>
 		  function initialize() {
+		  	var myLatlng = new google.maps.LatLng(-13.433010, -49.800219);
 			var mapCanvas = document.getElementById('map_canvas');
 			var mapOptions = {
-			  center: new google.maps.LatLng(-13.433010, -49.800219),
+			  center: myLatlng,
 			  zoom: 4,
 			  mapTypeId: google.maps.MapTypeId.ROADMAP
 			}
 			var map = new google.maps.Map(mapCanvas, mapOptions);
+			var heatmap = new HeatmapOverlay(map,
+				{
+					"radius": 2,
+					"maxOpacity": 1,
+					"scaleRadius": true,
+					"useLocalExtrema": true,
+					latField: 'lat',
+					lngField: 'lng',
+					valueField: 'acidentes'
+				}
+			);
+			var testData = {
+				max: 8,
+				data: [{lat: 24.000, lng: 46.7732, count: 3}, {lat: 24.000, lng: 46.7732, count: 3}]
+			};
+			heatmap.setData(testData);
 		  }
 		  google.maps.event.addDomListener(window, 'load', initialize);
 		</script>
