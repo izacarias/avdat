@@ -1,0 +1,72 @@
+body {
+	font-family:'Ubuntu', sans-serif;-webkit-font-smoothing:antialiased;
+	background:#fcfefc;
+	background:-ms-linear-gradient(top left, #fcfefc 20%, #def6fe 100%);
+	background:-moz-linear-gradient(top left, #fcfefc 20%, #def6fe 100%);
+	background:-o-linear-gradient(top left, #fcfefc 20%, #def6fe 100%);
+	background:-webkit-gradient(linear, left top, right bottom, color-stop(0.2, #fcfefc), color-stop(1, #def6fe));
+	background:-webkit-linear-gradient(top left, #fcfefc 20%, #def6fe 100%);
+	background:linear-gradient(to bottom right, #fcfefc 20%, #def6fe 100%);
+}
+
+#map_canvas {
+	/* width: 100%; */
+	height: 400px;
+	background-color: #CCC;
+}
+
+h3.panel-header-blue {
+	line-height:60px;
+	margin:0;
+	background-color:#24B2EE;
+	background:rgba(36,178,238,0.77);
+	width:100%;
+	font-size:1.1em;
+	color:#FFF;
+	text-transform:uppercase;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	text-align:center;
+	float:left;
+	font-weight:500
+}
+
+.panel-bg{
+	float:left;
+	width:100%;
+	background:#e1f6fe;
+	-webkit-border-bottom-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-bottomleft:5px;
+	border-bottom-right-radius:5px;
+	border-bottom-left-radius:5px;
+	overflow:hidden;
+	margin-bottom:20px;
+	padding:0
+}
+
+h3.panel-header-blue.short {
+	line-height:49px
+}
+
+@media only screen and (max-height: 800px) {
+	h3.panel-header-blue.short{line-height:37px;font-size:1em}
+}
+
+@media only screen and (max-width: 815px) {
+	h3.panel-header-blue{font-size:.96em;line-height:47px}
+}
+
+@media only screen and (max-width: 768px) {
+	h3.panel-header-blue{font-size:.9em}
+}
+
+/* Meus estilos */
+.alignbottom {
+	vertical-align: bottom;
+}
