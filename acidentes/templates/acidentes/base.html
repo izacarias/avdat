@@ -1,51 +1,75 @@
 <!doctype html>{% load staticfiles %}
-<html>
-	<head>
-        <title>AVDAT</title>		
-        <meta charset="UTF-8">
-		<link href="{% static "acidentes/css/bootstrap.min.css" %}" rel='stylesheet' type='text/css'/>
-		<link href="{% static "acidentes/styles.css" %}" rel='stylesheet' type='text/css'/>
-    </head>
-	<body background="{% static "acidentes/images/teste12.jpeg" %}">
-		<div class="container">
-			<div class="row" style="text-align: left">
-				<div class="col-xs-3 nopadding semborda" style="text-align: left">            
-					<a href="/acidentes/"> <img src="{% static "acidentes/images/logo3.png" %}" height="80" width="160"/></a>
-				</div>
-				<div class="col-xs-5 col-xs-offset-0 nopadding semborda titulopag" style="text-align: center">
-					<strong>Aplicação para visualização de acidentes de trabalho</strong>
-				</div>
-				<div class="col-xs-4 col-xs-offset-0 nopadding semborda" style="text-align: center">            		
-					<div class="nopaddingbotoes">
-						<a href="voce_sabia" class="ab-boton">Você sabia?</a>
-						<a href="equipe" class="ab-boton">Equipe</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row" style="text-align: center">
-				<div class="col-xs-12 col-xs-offset-0 nopadding" style="text-align: center">            
-					<div align="center" class="account-wall" style="text-align: center; background-color: #B1BEC1">
-						{% block conteudo %}{% endblock %}
-					</div>            
-				</div>
-			</div>
-		</div>
-		<br>
-		<hr/>       
-		<footer>
-			<div>
-				<p align="center"> UFSM Campus de Frederico Westphalen @ 2014</p>
-			</div>
-		</footer>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript" src="{% static "acidentes/js/sha512.js" %}"></script> 
-        <script type="text/javascript" src="{% static "acidentes/js/forms.js" %}"></script> 
-        <script type="text/javascript" src="{% static "acidentes/js/highcharts.js" %}"></script>
-        {% block custom_scripts %}
-        {% endblock %}
-	</body>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block titulo %}AVDAT - Dados sobre acidentes de trabalho{% endblock titulo %}</title>
+    <link rel="stylesheet" href="{% static "acidentes/css/foundation.min.css" %}" />
+    <link rel="stylesheet" href="{% static "acidentes/css/app.css" %}" />
+    <script src="{% static "acidentes/js/vendor/modernizr.js" %}"></script>
+</head>
+<body>
+
+    <div class="row">
+        <div class="large-3 columns">
+            <h1><img src="{% static "acidentes/images/logo.png" %}"/></h1>
+        </div>
+        <div class="large-9 columns">
+            <ul class="inline-list right">
+                <li><a href="voce_sabia">Saiba mais</a></li>
+                <li><a href="equipe">Equipe</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-9 push-3 columns">
+            <!-- begin of content block -->
+            {% block conteudo %}
+            
+            {% endblock conteudo %}
+            <!-- end of content block -->
+        </div>
+
+        <!-- menu da barra lateral -->
+        <div class="large-3 pull-9 columns">
+            <h3 class="panel-header-blue short">
+                Funções
+            </h3>
+            <ul class="side-nav panel-bg">
+                <li><a href="#">Section 1</a></li>
+                <li><a href="#">Section 2</a></li>
+                <li><a href="#">Section 3</a></li>
+                <li><a href="#">Section 4</a></li>
+                <li><a href="#">Section 5</a></li>
+                <li><a href="#">Section 6</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <footer class="row">
+        <div class="large-12 columns">
+            <hr/>
+            <div class="row">
+                <div class="large-6 columns">
+                    <p>UFSM Campus de Frederico Westphalen / 2014</p>
+                </div>
+                <div class="large-6 columns">
+                    <ul class="inline-list right">
+                        <li><a href="#">Section 1</a></li>
+                        <li><a href="#">Section 2</a></li>
+                        <li><a href="#">Section 3</a></li>
+                        <li><a href="#">Section 4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+    </footer>
+
+    <script src="{% static "acidentes/js/vendor/jquery.js" %}"></script>
+    <script src="{% static "acidentes/js/foundation.min.js" %}"></script>
+    {% block page_js %}
+    {% endblock page_js %}
+</body>
 </html>

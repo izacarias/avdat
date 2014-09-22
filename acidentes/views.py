@@ -1,16 +1,35 @@
 # -*- coding: utf-8 -*-
 import json
-from django.shortcuts import render, render_to_response, RequestContext
-from django.http import HttpResponse
+import simplejson
 from django.core.context_processors import csrf
-from django.utils.funcional import Promise
-from djanto.utils.encoding import force_text
+from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
+from django.http import HttpResponse
+from django.shortcuts import render, render_to_response, RequestContext
+from django.utils.encoding import force_text
 from django.views.decorators.csrf import csrf_protect
 from chartit import DataPool, Chart
 from acidentes.models import SeriesPais, SeriesUniaoFederacao, UniaoFederacao
 
 def index(request):
+    # necessário para CSRF token
+    c = {}
+    c.update(csrf(request))
+    # busca todos os anos com dados
+    anos = SeriesUniaoFederacao.objects.values('ano').distinct().order_by('-ano')
+    # pega o ano solicitado ou o último disponível
+    if request.method == 'POST':
+        ano_solicitado = request.POST.get('ano')
+    else:
+        ano_solicitado = anos[0].get('ano')
+    # busca dos dados do ano
+    dict_indicies = (SeriesUniaoFederacao.objects.values('uf__latitude', 'uf__longitude' , 'acidentes').filter(ano=ano_solicitado))
+    indices_json = simplejson.dumps(list(dict_indicies))
+    return render_to_response('acidentes/index.html', RequestContext(request, 
+        {'anos':anos, 'ano_solicitado':ano_solicitado, 'indices_json': indices_json}))
+    #return HttpResponse(indices_json)
+
+def graphs(request):
     c = {}
     c.update(csrf(request))
     if request.method == "POST" and request.POST.get('uf') != "selecione" : 
@@ -119,7 +138,7 @@ def index(request):
     )
 
     # dados para o heatmap
-    estados
+    #estados
 
     # Renderiza o HTML para a saída
     # return render_to_response('acidentes/index.html', {'charts': [acidPais, comparacaoChart]})
