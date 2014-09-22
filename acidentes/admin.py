@@ -3,8 +3,8 @@ from acidentes.models import Pais, Regiao, UniaoFederacao, Sexo
 from acidentes.models import SeriesPais, SeriesRegioes, SeriesUniaoFederacao, SeriesSexo
 
 class SeriesUniaoFederacaoAdmin(admin.ModelAdmin):
-	list_display = ('ano', 'uf', 'acidentes')
-	
+    list_display = ('ano', 'uf', 'acidentes')
+    
 
 # Register your models here.
 admin.site.register(Pais)
