@@ -26,7 +26,7 @@
                 </select>
             </div>
             <div class="small-3 columns end">
-                <button type="submit" class="button radius tiny expand">Visualizar</button>
+                <button type="submit" id="visualizar" class="button radius tiny expand">Visualizar</button>
             </div>
         </div>
         {% csrf_token %}
@@ -51,4 +51,18 @@
     {{ charts|load_charts:"chart_canvas" }}
     <script type="text/javascript" src="{% static "acidentes/js/highcharts.js" %}"></script>
     {% endif %}
+    <script type="text/javascript">
+    $(function(){
+        $('#uf1, #uf2').change(function(){
+            var value1 = $('#uf1').val();
+            var value2 = $('#uf2').val();
+            var btnVisualizar = $('#visualizar');
+            if (value1 == value2) {
+                btnVisualizar.attr('disabled', 'disabled');
+            } else {
+                btnVisualizar.removeAttr('disabled');
+            }
+        });
+    });
+    </script>
 {% endblock page_js %}
