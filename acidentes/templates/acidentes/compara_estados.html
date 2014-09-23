@@ -3,29 +3,30 @@
 
 {% block conteudo %}
     <h3>Compare índices de duas UFs <small>Gráfico com comparativo dos índices entre duas UFs</small></h3>
-    <form action="/acidentes/compara_estados" method="post">
+    <form data-abide action="/acidentes/compara_estados" method="post">
         <div class="row">
-            <div class="small-3 column">
-                <label for="uf1" class="right inline">Selecione uma UF</label>
+            <div class="medium-3 column">
+                <label for="uf1" class="text-right inline">Selecione uma UF</label>
             </div>
-            <div class="small-2 column">
-                <select name="uf1" id="uf1">
+            <div class="medium-2 column">
+                <select name="uf1" id="uf1" data-abide-validator="notEqualTo" data-notequalto="uf2">
                     {% for uf in ufs %}
                         <option value="{{uf.sigla}}"{% if uf.sigla == uf_1 %} selected="selected"{% endif %}>{{uf.sigla}}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="small-2 column">
-                <label for="uf2" class="right inline">Comparar com</label>
+            <div class="medium-2 column">
+                <label for="uf2" class="text-right inline">Comparar com</label>
             </div>
-            <div class="small-2 column">
-                <select name="uf2" id="uf2">
+            <div class="medium-2 column">
+                <select name="uf2" id="uf2" data-abide-validator="notEqualTo" data-notequalto="uf1">
                     {% for uf in ufs %}
                         <option value="{{uf.sigla}}"{% if uf.sigla == uf_2 %} selected="selected"{% endif %}>{{uf.sigla}}</option>
                     {% endfor %}
                 </select>
+                <small class="error">Escolha uma UF diferente para comparar.</small>
             </div>
-            <div class="small-3 columns end">
+            <div class="medium-3 columns end">
                 <button type="submit" id="visualizar" class="button radius tiny expand">Visualizar</button>
             </div>
         </div>
@@ -55,19 +56,19 @@
     {{ charts|load_charts:"chart_canvas" }}
     <script type="text/javascript" src="{% static "acidentes/js/highcharts.js" %}"></script>
     {% endif %}
+    
     <script type="text/javascript">
-    $(function(){
-        $('#uf1, #uf2').change(function(){
-            var value1 = $('#uf1').val();
-            var value2 = $('#uf2').val();
-            var btnVisualizar = $('#visualizar');
-            if (value1 == value2) {
-                btnVisualizar.attr('disabled', 'disabled');
-                $('#mesmaUfModal').foundation('reveal', 'open');
-            } else {
-                btnVisualizar.removeAttr('disabled');
-            }
-        });
+    $(document).foundation({
+        abide : {
+            validators: {
+                notEqualTo: function(el, required, parent){
+                    var from = document.getElementById(el.getAttribute(this.add_namespace('data-notequalto'))).value,
+                        to = el.value,
+                        valid = (from != to);
+                    return valid;
+                }
+            },
+        }
     });
     </script>
 {% endblock page_js %}
