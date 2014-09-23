@@ -79,7 +79,7 @@ def compara_estados(request):
             }],
             chart_options = {
                 'title': {
-                   'text': 'Comparação com o índice de acidentes no Brasil'
+                   'text': 'Comparativo do índice de acidentes'
                 },
                 'legend': {
                     'enabled': True
@@ -95,3 +95,60 @@ def compara_estados(request):
     return render_to_response('acidentes/compara_estados.html', RequestContext(request, 
         {'ufs':ufs, 'uf_1':uf_1, 'uf_2':uf_2, 'ufs_selecionadas':ufs_selecionadas, 
          'charts':[compara_uf_chart]}))
+
+def compara_pais(request):
+    # necessário para CSRF token
+    c = {}
+    c.update(csrf(request))
+    uf_selecionada = False
+    compara_uf_chart = False
+    uf = ''
+    # lista todas as UFs com dados
+    ufs  = UniaoFederacao.objects.values('sigla').order_by('sigla')
+    # se vier por POST renderiza o gráfico
+    if request.method == 'POST':
+        # recupera os dados informados pelo usuário
+        uf = request.POST.get('uf')
+        uf_selecionada = True
+        # busca dados das UFs
+        uf_indices = SeriesUniaoFederacao.objects.filter(uf__sigla=uf)
+        brasil_indices = SeriesPais.objects.filter()
+        # Cria o DataPool para comparação
+        comparacao_data = DataPool(
+            series=[{
+                'options': {'source': uf_indices},
+                'terms':[{'ano_uf':'ano'}, {uf: 'acidentes'}]
+            }, {
+                'options': {'source': brasil_indices},
+                'terms':[{'ano_brasil': 'ano'}, {'Brasil': 'acidentes'}]
+            }]
+        )
+        # cria o objeto gráfico
+        compara_uf_chart = Chart(datasource = comparacao_data,
+            series_options = [{
+                'options':{
+                  'type': 'line',
+                  'stacking': False
+                },
+                'terms': {
+                  'ano_uf': [uf],
+                  'ano_brasil': ['Brasil']
+                }
+            }],
+            chart_options = {
+                'title': {
+                   'text': 'Comparativo com o índice de acidentes nacional'
+                },
+                'legend': {
+                    'enabled': True
+                },
+                'xAxis': {
+                    'title': {'text': 'Ano'}
+                },
+                'yAxis': {
+                    'title': {'text': 'Acidentes (por 1000 segurados)'}
+                }
+        })
+    # renderiza a view
+    return render_to_response('acidentes/compara_pais.html', RequestContext(request, 
+        {'ufs':ufs, 'uf_plotada':uf, 'ufs_selecionadas':uf_selecionada, 'charts':[compara_uf_chart]}))
