@@ -43,6 +43,10 @@
         <p>Selecione o ano e as duas UFs que deseja comparar, em seguida clique no botão Visualizar.</p> 
     </div>
     {% endif %}
+    <div id="mesmaUfModal" class="reveal-modal" data-reveal>
+        <p>Você deve selecionar duas UFs diferentes para comparar os dados.</p>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
 {% endblock conteudo %}
 
 {% block page_js %}
@@ -59,6 +63,7 @@
             var btnVisualizar = $('#visualizar');
             if (value1 == value2) {
                 btnVisualizar.attr('disabled', 'disabled');
+                $('#mesmaUfModal').foundation('reveal', 'open');
             } else {
                 btnVisualizar.removeAttr('disabled');
             }
