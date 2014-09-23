@@ -3,24 +3,24 @@
 
 {% block conteudo %}
 			<h3>Mapa de acidentes <small>Mapa de calor dos acidentes por estado em {{ano_solicitado}}</small></h3>
-            <form action="/acidentes/" method="post">
-                <div class="row">
-                    <div class="small-1 columns">
+            <div class="row">
+                <form action="/acidentes/" method="post">
+                    <div class="small-3 medium-1 columns">
                         <label for="ano" class="right inline">Ano</label>
                     </div>
-                    <div class="small-4 columns">
+                    <div class="small-6 medium-4 columns">
                         <select name="ano">
                             {% for ano in anos %}
                             <option value="{{ano.ano}}"{% if ano.ano|slugify == ano_solicitado %} selected="selected"{% endif %}>{{ano.ano}}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="small-4 columns end">
+                    <div class="small-3 medium-4 columns end">
                         <button type="submit" class="button radius tiny">Visualizar</button>
                     </div>
-                </div>
-                {% csrf_token %}
-            </form>
+                    {% csrf_token %}
+                </form>
+            </div>
             <div class="row">
                 <div id="map_canvas" class="small-12 columns">
                 <!-- placeholder for google maps -->
@@ -38,7 +38,6 @@
     <script>
         $(document).foundation();
         var myLatlng = new google.maps.LatLng(-15.2, -49.800219);
-
         function initialize() {
             var mapCanvas = document.getElementById('map_canvas');
             var mapOptions = {
@@ -64,7 +63,6 @@
 			    // which field name in your data represents the data value - default "value"
 			    valueField: 'acidentes'
 			});
-
 			var testData = {
 				max: 8,
 				data: {{ indices_json|safe }}

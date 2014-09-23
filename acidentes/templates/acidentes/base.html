@@ -11,10 +11,10 @@
 <body>
 
     <div class="row">
-        <div class="large-3 columns">
+        <div class="medium-3 small-12 columns">
             <h1><a href="/acidentes/"><img src="{% static "acidentes/images/logo.png" %}"/></a></h1>
         </div>
-        <div class="large-9 columns">
+        <div class="medium-9 small-12 columns">
             <ul class="inline-list right">
                 <li><a href="voce_sabia">Saiba mais</a></li>
                 <li><a href="equipe">Equipe</a></li>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="row">
-        <div class="large-9 push-3 columns">
+        <div class="small-12 medium-9 push-3 columns">
             <!-- begin of content block -->
             {% block conteudo %}
             
@@ -32,7 +32,7 @@
         </div>
 
         <!-- menu da barra lateral -->
-        <div class="large-3 pull-9 columns">
+        <div class="medium-3 small-12 pull-9 columns">
             <h3 class="panel-header-blue short">
                 Funções
             </h3>
@@ -45,7 +45,6 @@
                 <li><a href="#">Section 6</a></li>
             </ul>
         </div>
-
     </div>
 
     <footer class="row">
@@ -74,6 +73,9 @@
     <script src="{% static "acidentes/js/vendor/jquery.js" %}"></script>
     <script src="{% static "acidentes/js/foundation.min.js" %}"></script>
     {% block page_js %}
+    <script>
+        $(document).foundation();
+    </script>
     {% endblock page_js %}
 </body>
 </html>
