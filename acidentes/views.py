@@ -44,16 +44,15 @@ def compara_estados(request):
     compara_uf_chart = False
     uf_1 = ''
     uf_2 = ''
-    # busca todos os anos com dados
-    anos = SeriesUniaoFederacao.objects.values('ano').distinct().order_by('-ano')
+    # lista todas as UFs com dados
     ufs  = UniaoFederacao.objects.values('sigla').order_by('sigla')
-    # pega o ano solicitado ou o mais atual
+    # se vier por POST renderiza o gráfico
     if request.method == 'POST':
-        ano_solicitado = request.POST.get('ano')
+        # recupera os dados informados pelo usuário
         uf_1 = request.POST.get('uf1')
         uf_2 = request.POST.get('uf2')
         ufs_selecionadas = True
-        # busca dados dos estados no ano escolhido
+        # busca dados das UFs
         uf1_indices = SeriesUniaoFederacao.objects.values().filter(uf__sigla=uf_1)
         uf2_indices = SeriesUniaoFederacao.objects.values().filter(uf__sigla=uf_2)
         # Cria o DataPool para comparação
@@ -66,31 +65,33 @@ def compara_estados(request):
                 'terms':[{'ano2': 'ano'}, {uf_2: 'acidentes'}]
             }]
         )
-
+        # cria o objeto gráfico
         compara_uf_chart = Chart(datasource = comparacao_data,
-        series_options = [{
-            'options':{
-              'type': 'line',
-              'stacking': False
-            },
-            'terms': {
-              'ano1': [uf_1],
-              'ano2': [uf_2]
-            }
-        }],
-        chart_options = {
-            'title': {
-               'text': 'Comparação com o índice de acidentes no Brasil'
-            },
-            'legend': {
-                'enabled': True
-            },
-            'xAxis': {
-                'title': {'text': 'Ano'}
-            },
-            'yAxis': {
-                'title': {'text': 'Acidentes (por 1000 segurados)'}
-            }
+            series_options = [{
+                'options':{
+                  'type': 'line',
+                  'stacking': False
+                },
+                'terms': {
+                  'ano1': [uf_1],
+                  'ano2': [uf_2]
+                }
+            }],
+            chart_options = {
+                'title': {
+                   'text': 'Comparação com o índice de acidentes no Brasil'
+                },
+                'legend': {
+                    'enabled': True
+                },
+                'xAxis': {
+                    'title': {'text': 'Ano'}
+                },
+                'yAxis': {
+                    'title': {'text': 'Acidentes (por 1000 segurados)'}
+                }
         })
+    # renderiza a view
     return render_to_response('acidentes/compara_estados.html', RequestContext(request, 
-        {'anos':anos, 'ufs':ufs, 'uf_1':uf_1, 'uf_2':uf_2, 'ufs_selecionadas':ufs_selecionadas, 'charts':[compara_uf_chart]}))
+        {'ufs':ufs, 'uf_1':uf_1, 'uf_2':uf_2, 'ufs_selecionadas':ufs_selecionadas, 
+         'charts':[compara_uf_chart]}))
