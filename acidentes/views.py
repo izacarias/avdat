@@ -11,6 +11,14 @@ from django.views.decorators.csrf import csrf_protect
 from chartit import DataPool, Chart
 from acidentes.models import SeriesPais, SeriesUniaoFederacao, UniaoFederacao
 
+# páginas estáticas
+def voce_sabia(request):
+    return render_to_response('acidentes/voce_sabia.html')
+
+def equipe(request):
+    return render_to_response('acidentes/equipe.html')
+
+# páginas dinâmicas
 def index(request):
     # necessário para CSRF token
     c = {}
@@ -33,6 +41,9 @@ def compara_estados(request):
     c = {}
     c.update(csrf(request))
     ufs_selecionadas = False
+    compara_uf_chart = False
+    uf_1 = ''
+    uf_2 = ''
     # busca todos os anos com dados
     anos = SeriesUniaoFederacao.objects.values('ano').distinct().order_by('-ano')
     ufs  = UniaoFederacao.objects.values('sigla').order_by('sigla')
@@ -43,136 +54,28 @@ def compara_estados(request):
         uf_2 = request.POST.get('uf2')
         ufs_selecionadas = True
         # busca dados dos estados no ano escolhido
-        uf1_indices = SeriesUniaoFederacao.objects.filter(uf__sigla=uf_1)
-        uf2_indices = SeriesUniaoFederacao.objects.filter(uf__sigla=uf_2)
-        # DataPool para comparacao
-        comparacao_data = DataPool(series=[
-            {'options': {
-                'source': uf1_indices},
-                'terms': {'acidentes_1': 'acidentes'}}, 
-            {'options': {
-                'source': uf2_indices,
-                'terms': {'acidentes2': 'acidentes'}}
-            }
-        ])
-        compara_uf_chart = Chart(datasource = comparacao_data,
-            series_options = [{
-                'options':{
-                  'type': 'column',
-                  'stacking': False
-                },
-                'terms': {
-                  'ano': ['acidentes', 'acidentes2'],
-                }
-            }], chart_options = {
-                'title': {
-                   'text': 'Comparação com o índice de acidentes no Brasil'
-                },
-                'legend': {
-                    'enabled': True
-                },
-                'xAxis': {
-                    'title': {'text': 'Ano'}
-                },
-                'yAxis': {
-                    'title': {'text': 'Acidentes (por 1000 segurados)'}
-                }
-            }
+        uf1_indices = SeriesUniaoFederacao.objects.values().filter(uf__sigla=uf_1)
+        uf2_indices = SeriesUniaoFederacao.objects.values().filter(uf__sigla=uf_2)
+        # Cria o DataPool para comparação
+        comparacao_data = DataPool(
+            series=[{
+                'options': {'source': uf1_indices},
+                'terms':[{'ano1':'ano'}, {uf_1: 'acidentes'}]
+            }, {
+                'options': {'source': uf2_indices},
+                'terms':[{'ano2': 'ano'}, {uf_2: 'acidentes'}]
+            }]
         )
-    return render_to_response('acidentes/compara_estado.html', RequestContext(request, 
-        {'anos':anos, 'ufs':ufs, 'ufs_selecionadas':ufs_selecionadas, 'charts':[compara_uf_chart]}))
 
-
-def graphs(request):
-    c = {}
-    c.update(csrf(request))
-    if request.method == "POST" and request.POST.get('uf') != "selecione" : 
-        uf = request.POST.get('uf')
-    else:
-        uf = 'RS'
-
-    if request.POST.get('uf') == 'selecione':
-        erro = True
-    else:
-        erro = False
-
-    # manda os estados
-    estados = UniaoFederacao.objects.all().order_by('sigla')
-
-    nome_field = 'Acidentes ' + uf
-    # Step 1: Cria o DataPool para a série Acidentes / Ano
-    acidentes_ano_data = DataPool(
-        series= [{
-            'options': {
-                'source': SeriesPais.objects.all()
-            },
-            'terms': [
-                'ano',
-                'acidentes'
-            ]
-        }]
-    )
-    
-    #Step 2: Cria o gráfico de barras para série Acidentes / Ano
-    acidPais = Chart(
-        datasource = acidentes_ano_data,
-        series_options = [{
-            'options':{
-              'type': 'column',
-              'stacking': False
-            },
-            'terms': {
-              'ano': ['acidentes']
-            }
-        }],
-        chart_options = {
-            'title': {
-               'text': 'Acidentes de Trabalho no Brasil'
-            },
-            'legend': {
-                'enabled': False
-            },
-            'xAxis': {
-                'title': {'text': 'Ano'}
-            },
-            'yAxis': {
-                'title': {'text': 'Acidentes (por 1000 segurados)'}
-            }
-        }
-    )
-
-    # Cria o grafico de comparacao entre pais e estado
-    comparacao_data = DataPool(
-        series=[{
-            'options': {
-                'source': SeriesPais.objects.all()
-            },
-            'terms': [
-                'ano',
-                'acidentes'
-            ]
-        }, {
-            'options': {
-                'source': SeriesUniaoFederacao.objects.filter(uf__sigla=uf)
-            },
-            'terms': [
-                {'ano_uf': 'ano'},
-                {nome_field: 'acidentes'}
-            ]
-        }
-        ]
-    )
-
-    comparacaoChart = Chart(
-        datasource = comparacao_data,
+        compara_uf_chart = Chart(datasource = comparacao_data,
         series_options = [{
             'options':{
               'type': 'line',
               'stacking': False
             },
             'terms': {
-              'ano': ['acidentes'],
-              'ano_uf': [nome_field]
+              'ano1': [uf_1],
+              'ano2': [uf_2]
             }
         }],
         chart_options = {
@@ -188,19 +91,6 @@ def graphs(request):
             'yAxis': {
                 'title': {'text': 'Acidentes (por 1000 segurados)'}
             }
-        }
-    )
-
-    # dados para o heatmap
-    #estados
-
-    # Renderiza o HTML para a saída
-    # return render_to_response('acidentes/index.html', {'charts': [acidPais, comparacaoChart]})
-    return render_to_response('acidentes/index.html', RequestContext(request, {'charts': [acidPais, comparacaoChart], 
-        'erro': erro, 'estados': estados}))
-
-def voce_sabia(request):
-    return render_to_response('acidentes/voce_sabia.html')
-
-def equipe(request):
-    return render_to_response('acidentes/equipe.html')
+        })
+    return render_to_response('acidentes/compara_estados.html', RequestContext(request, 
+        {'anos':anos, 'ufs':ufs, 'uf_1':uf_1, 'uf_2':uf_2, 'ufs_selecionadas':ufs_selecionadas, 'charts':[compara_uf_chart]}))

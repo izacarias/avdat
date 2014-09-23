@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block conteudo %}
-    <h3>Comparação entre UFs <small>Gráfico com comparação dos índices entre duas UFs</small></h3>
+    <h3>Compare índices de duas UFs <small>Gráfico com comparativo dos índices entre duas UFs</small></h3>
     <form action="/acidentes/compara_estados" method="post">
         <div class="row">
             <div class="small-3 column">
@@ -11,33 +11,21 @@
             <div class="small-2 column">
                 <select name="uf1" id="uf1">
                     {% for uf in ufs %}
-                        <option value="{{uf.sigla}}">{{uf.sigla}}</option>
+                        <option value="{{uf.sigla}}"{% if uf.sigla == uf_1 %} selected="selected"{% endif %}>{{uf.sigla}}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="small-2 column">
                 <label for="uf2" class="right inline">Comparar com</label>
             </div>
-            <div class="small-2 column end">
-                <select name="uf2" id="uf1">
+            <div class="small-2 column">
+                <select name="uf2" id="uf2">
                     {% for uf in ufs %}
-                        <option value="{{uf.sigla}}">{{uf.sigla}}</option>
+                        <option value="{{uf.sigla}}"{% if uf.sigla == uf_2 %} selected="selected"{% endif %}>{{uf.sigla}}</option>
                     {% endfor %}
                 </select>
             </div>
-        </div>
-        <div class="row">
-            <div class="small-3 column">
-                <label for="ano" class="right inline">Ano</label>
-            </div>
-            <div class="small-2 columns end">
-                <select name="ano">
-                    {% for ano in anos %}
-                    <option value="{{ano.ano}}"{% if ano.ano|slugify == ano_solicitado %} selected="selected"{% endif %}>{{ano.ano}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="small-4 columns end">
+            <div class="small-3 columns end">
                 <button type="submit" class="button radius tiny expand">Visualizar</button>
             </div>
         </div>
@@ -51,7 +39,7 @@
     </div>
     {% else %}
     <div class="panel callout radius"> 
-        <h5>Comparação entre UFs</h5> 
+        <h5>Comparativo entre UFs</h5> 
         <p>Selecione o ano e as duas UFs que deseja comparar, em seguida clique no botão Visualizar.</p> 
     </div>
     {% endif %}
