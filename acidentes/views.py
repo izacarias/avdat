@@ -112,7 +112,7 @@ def compara_pais(request):
         uf_selecionada = True
         # busca dados das UFs
         uf_indices = SeriesUniaoFederacao.objects.filter(uf__sigla=uf)
-        brasil_indices = SeriesPais.objects.filter()
+        brasil_indices = SeriesPais.objects.all()
         # Cria o DataPool para comparação
         comparacao_data = DataPool(
             series=[{
@@ -152,3 +152,43 @@ def compara_pais(request):
     # renderiza a view
     return render_to_response('acidentes/compara_pais.html', RequestContext(request, 
         {'ufs':ufs, 'uf_plotada':uf, 'ufs_selecionadas':uf_selecionada, 'charts':[compara_uf_chart]}))
+
+def evolucao_brasil(request):
+    c = {}
+    c.update(csrf(request))
+    brasil_indices = SeriesPais.objects.all()
+        # Cria o DataPool com séries de evolução do país
+    series_pais = DataPool(
+        series=[{
+            'options': {'source': brasil_indices},
+            'terms':[{'ano_brasil': 'ano'}, {'Brasil': 'acidentes'}]
+        }]
+    )
+    # cria o objeto gráfico
+    series_pais_chart = Chart(datasource = series_pais,
+        series_options = [{
+            'options':{
+              'type': 'column',
+              'stacking': False
+            },
+            'terms': {
+              'ano_brasil': ['Brasil']
+            }
+        }],
+        chart_options = {
+            'title': {
+               'text': 'Evolução dos índices nacionais'
+            },
+            'legend': {
+                'enabled': False
+            },
+            'xAxis': {
+                'title': {'text': 'Ano'}
+            },
+            'yAxis': {
+                'title': {'text': 'Acidentes (por 1000 segurados)'}
+            }
+    })
+    # renderiza a view
+    return render_to_response('acidentes/evolucao_brasil.html', RequestContext(request, 
+        {'chart':[series_pais_chart]}))

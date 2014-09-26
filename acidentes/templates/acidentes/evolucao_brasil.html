@@ -1,0 +1,20 @@
+{% extends "acidentes/base.html" %}
+{% load staticfiles %}
+
+{% block conteudo %}
+    <h3>Evolução dos dados no Brasil</h3>
+    <div class="row">
+        <div id="chart_canvas" class="small-12 columns">
+        <!-- placeholder for chart-it -->
+        </div>
+    </div>
+{% endblock conteudo %}
+
+{% block page_js %}
+    {% load chartit %}
+    {{ chart|load_charts:"chart_canvas" }}
+    <script type="text/javascript" src="{% static "acidentes/js/highcharts.js" %}"></script>
+    <script type="text/javascript">
+    $(document).foundation();
+    </script>
+{% endblock page_js %}
