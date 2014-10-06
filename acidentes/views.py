@@ -9,7 +9,8 @@ from django.shortcuts import render, render_to_response, RequestContext
 from django.utils.encoding import force_text
 from django.views.decorators.csrf import csrf_protect
 from chartit import DataPool, Chart
-from acidentes.models import SeriesPais, SeriesUniaoFederacao, UniaoFederacao
+from acidentes.models import Regiao, UniaoFederacao
+from acidentes.models import SeriesPais, SeriesRegioes, SeriesUniaoFederacao
 
 # páginas estáticas
 def voce_sabia(request):
@@ -152,6 +153,67 @@ def compara_pais(request):
     # renderiza a view
     return render_to_response('acidentes/compara_pais.html', RequestContext(request, 
         {'ufs':ufs, 'uf_plotada':uf, 'ufs_selecionadas':uf_selecionada, 'charts':[compara_uf_chart]}))
+
+def regiao_pais(request):
+    # necessário para CSRF token
+    c = {}
+    c.update(csrf(request))
+    regiao_selecionada = False
+    compara_regiao_chart = False
+    codigo_regiao = 0
+    nome_regiao = ''
+    # lista todas as regiões
+    regioes  = Regiao.objects.values('id', 'nome').order_by('nome')
+    # se vier por POST renderiza o gráfico
+    if request.method == 'POST':
+        # recupera os dados informados pelo usuário
+        codigo_regiao = request.POST.get('regiao')
+        regiao_selecionada = True
+        # nome da regiao para template
+        nome_regiao = Regiao.objects.get(id=codigo_regiao).nome
+        # busca dados das UFs
+        regiao_indices = SeriesRegioes.objects.filter(regiao__id=codigo_regiao)
+        brasil_indices = SeriesPais.objects.all()
+        # Cria o DataPool para comparação
+        comparacao_data = DataPool(
+            series=[{
+                'options': {'source': regiao_indices},
+                'terms':[{'ano_regiao':'ano'}, {nome_regiao: 'acidentes'}]
+            }, {
+                'options': {'source': brasil_indices},
+                'terms':[{'ano_brasil': 'ano'}, {'Brasil': 'acidentes'}]
+            }]
+        )
+        # cria o objeto gráfico
+        compara_regiao_chart = Chart(datasource = comparacao_data,
+            series_options = [{
+                'options':{
+                  'type': 'line',
+                  'stacking': False
+                },
+                'terms': {
+                  'ano_regiao': [nome_regiao],
+                  'ano_brasil': ['Brasil']
+                }
+            }],
+            chart_options = {
+                'title': {
+                   'text': 'Comparativo com o índice de acidentes nacional'
+                },
+                'legend': {
+                    'enabled': True
+                },
+                'xAxis': {
+                    'title': {'text': 'Ano'}
+                },
+                'yAxis': {
+                    'title': {'text': 'Acidentes (por 1000 segurados)'}
+                }
+        })
+    # renderiza a view
+    return render_to_response('acidentes/regiao_pais.html', RequestContext(request, 
+        {'regioes':regioes, 'regiao_selecionada':regiao_selecionada, 'codigo_regiao':codigo_regiao, 
+        'charts':[compara_regiao_chart]}))
 
 def evolucao_brasil(request):
     c = {}

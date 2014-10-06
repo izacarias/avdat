@@ -1,0 +1,63 @@
+{% extends "acidentes/base.html" %}
+{% load staticfiles %}
+
+{% block conteudo %}
+    <h3>Compare índices de uma região com os índices nacionais</h3>
+    <form data-abide action="/acidentes/regiao_pais" method="post">
+        <div class="row">
+            <div class="medium-3 column">
+                <label for="regiao" class="text-right inline">Selecione uma Região</label>
+            </div>
+            <div class="medium-3 column">
+                <select name="regiao" id="regiao">
+                    {% for regiao in regioes %}
+                        <option value="{{regiao.id}}"{% if regiao.id|slugify == codigo_regiao|slugify %} selected="selected"{% endif %}>{{regiao.nome}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="medium-3 columns end">
+                <button type="submit" id="visualizar" class="button radius tiny expand">Visualizar</button>
+            </div>
+        </div>
+        {% csrf_token %}
+    </form>
+    {% if ufs_selecionadas %}
+    <div class="row">
+        <div id="chart_canvas" class="small-12 columns">
+        <!-- placeholder for google maps -->
+        </div>
+    </div>
+    {% else %}
+    <div class="panel callout radius"> 
+        <h5>Comparativo entre UFs</h5> 
+        <p>Selecione o ano e as duas UFs que deseja comparar, em seguida clique no botão Visualizar.</p> 
+    </div>
+    {% endif %}
+    <div id="mesmaUfModal" class="reveal-modal" data-reveal>
+        <p>Você deve selecionar duas UFs diferentes para comparar os dados.</p>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+{% endblock conteudo %}
+
+{% block page_js %}
+    {% if ufs_selecionadas %}
+    {% load chartit %}
+    {{ charts|load_charts:"chart_canvas" }}
+    <script type="text/javascript" src="{% static "acidentes/js/highcharts.js" %}"></script>
+    {% endif %}
+    
+    <script type="text/javascript">
+    $(document).foundation({
+        abide : {
+            validators: {
+                notEqualTo: function(el, required, parent){
+                    var from = document.getElementById(el.getAttribute(this.add_namespace('data-notequalto'))).value,
+                        to = el.value,
+                        valid = (from != to);
+                    return valid;
+                }
+            },
+        }
+    });
+    </script>
+{% endblock page_js %}
