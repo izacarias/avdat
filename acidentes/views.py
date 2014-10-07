@@ -231,13 +231,26 @@ def evolucao_brasil(request):
         series_options = [{
             'options':{
               'type': 'column',
-              'stacking': False
+              'stacking': False,
             },
             'terms': {
               'ano_brasil': ['Brasil']
             }
         }],
         chart_options = {
+            'chart': {
+                'options3d': {
+                    'enabled': True,
+                    'alpha': 5,
+                    'beta':  15,
+                    'depth': 70
+                },
+            },
+            'plotOptions': {
+                'column': {
+                    'depth': 25
+                }
+            },
             'title': {
                'text': 'Evolução dos índices nacionais'
             },
