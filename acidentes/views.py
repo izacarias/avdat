@@ -218,54 +218,52 @@ def regiao_pais(request):
 def evolucao_regioes(request):
     c = {}
     c.update(csrf(request))
-    # Queryset com dados do Brasil e Regiões
-    brasil_indices  = SeriesPais.objects.all()
-    regioes_indices = SeriesRegioes.objects.all()
-    # return HttpResponse(serializers.serialize('json', regioes_indices))
-    # DataPool com dados recuperados
-    anos = SeriesRegioes.objects.values('ano').distinct().order_by("-ano")
-    ds_chart = DataPool(
-        series=[
-            {
-                'options': {'source': regioes_indices},
-                'terms':[{'ano_regioes': 'ano'}, {'acid_regioes': 'acidentes'}, {'regiao':'regiao__nome'}]
-            }, 
-            # {
-            #     'options':{'source': brasil_indices},
-            #     'terms':[{'ano_brasil': 'ano'}, {'acid_brasil': 'acidentes'}, {'regiao': 'pais'}]
-            # }
-        ]
-    )
-    # cria o objeto gráfico
-    compara_regiao_chart = Chart(datasource = ds_chart,
-        series_options = [{
-            'options':{
-              'type': 'column',
-              'stacking': True,
-              'stack': 0
-            },
-            'terms': {
-              'ano_regioes': ['acid_regioes'],
-              # 'ano_brasil': ['Brasil'],
-            }
-        }],
-        chart_options = {
-            'title': {
-               'text': 'Comparativo com o índice de acidentes nacional'
-            },
-            'legend': {
-                'enabled': True
-            },
-            # 'xAxis': {
-            #     'title': {'text': 'Ano'}
-            # },
-            'yAxis': {
-                'title': {'text': 'Acidentes (por 1000 segurados)'}
-            }
-    })
+    anos = SeriesRegioes.objects.values('ano').distinct().order_by('-ano')
+    ano_selecionado = 0
+    cht = False
+    if request.method == 'POST':
+        ano_selecionado = request.POST.get('ano')
+        indices = SeriesRegioes.objects.filter(ano=ano_selecionado)
+        ds = DataPool(
+            series=
+                [{'options': {
+                    'source': indices},
+                  'terms': [
+                    'regiao__nome',
+                    'acidentes'
+                  ]}
+                ])
+        cht = Chart(
+                datasource = ds,
+                series_options =
+                    [{'options': {
+                        'type': 'pie',
+                        'stacking': False},
+                      'terms': {
+                        'regiao__nome': [
+                            'acidentes']
+                      }}],
+                chart_options = 
+                    {'chart': {
+                        'options3d': {
+                            'enabled': True,
+                            'alpha': 45
+                        }
+                     }, 
+                     'plotOptions': {
+                        'pie': {
+                            'innerSize': 100,
+                            'depth': 45
+                        }
+                     },
+                     'title': {
+                        'text': 'Grafico das regiões (Ano: ' + str(ano_selecionado) + ')'
+                     }
+                    }
+            )
     # renderiza a view
     return render_to_response('acidentes/evolucao_regioes.html', RequestContext(request, 
-        {'chart':[compara_regiao_chart]}))
+        {'anos':anos, 'ano_selecionado':ano_selecionado, 'chart':[cht]}))
 
 def evolucao_brasil(request):
     c = {}
