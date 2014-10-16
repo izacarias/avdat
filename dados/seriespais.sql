@@ -38,3 +38,22 @@ UPDATE acidentes_uniaofederacao SET latitude=2.25, longitude=-61.25    WHERE sig
 UPDATE acidentes_uniaofederacao SET latitude=-4, longitude=-53     WHERE sigla = 'PA';
 UPDATE acidentes_uniaofederacao SET latitude=1, longitude=-52     WHERE sigla = 'AP';
 UPDATE acidentes_uniaofederacao SET latitude=-10.5, longitude=-48    WHERE sigla = 'TO';
+
+
+
+
+/* Cria a coluna com o pib do país */
+ALTER TABLE acidentes_seriespais ADD COLUMN pib2 bigint;
+/* Cria dados do PIB do país */
+UPDATE acidentes_seriespais SET pib=939147000000 WHERE ano=1997;
+UPDATE acidentes_seriespais SET pib=979276000000 WHERE ano=1998;
+UPDATE acidentes_seriespais SET pib=1065000000000 WHERE ano=1999;
+UPDATE acidentes_seriespais SET pib=1179482000000 WHERE ano=2000;
+UPDATE acidentes_seriespais SET pib=1302136000000 WHERE ano=2001;
+UPDATE acidentes_seriespais SET pib=1477822000000 WHERE ano=2002;
+UPDATE acidentes_seriespais SET pib=1699948000000 WHERE ano=2003;
+UPDATE acidentes_seriespais SET pib=1941498000000 WHERE ano=2004;
+UPDATE acidentes_seriespais SET pib=2147239000000 WHERE ano=2005;
+UPDATE acidentes_seriespais SET pib=2369484000000 WHERE ano=2006;
+UPDATE acidentes_seriespais SET pib=2661344000000 WHERE ano=2007;
+UPDATE acidentes_seriespais SET pib=3032203000000 WHERE ano=2008;
