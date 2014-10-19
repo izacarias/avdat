@@ -9,42 +9,27 @@ body {
 	background:linear-gradient(to bottom right, #fcfefc 20%, #def6fe 100%);
 }
 
-#map_canvas {
-	width: 98%;
-	height: 450px;
-	background-color: #CCC;
+.barra-superior {
+	height: 1.5em;
 }
 
 h3.panel-header-blue {
 	line-height:60px;
-	margin:0;
+	margin:1em 0 0 0;
 	background-color:#24B2EE;
 	background:rgba(36,178,238,0.77);
 	width:100%;
 	font-size:1.1em;
 	color:#FFF;
-	text-transform:uppercase;
-	-webkit-border-top-left-radius:5px;
-	-webkit-border-top-right-radius:5px;
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-topright:5px;
-	border-top-left-radius:5px;
-	border-top-right-radius:5px;
 	text-align:center;
 	float:left;
-	font-weight:500
+	font-weight:500;
 }
 
 .panel-bg{
 	float:left;
 	width:100%;
 	background:#e1f6fe;
-	-webkit-border-bottom-right-radius:5px;
-	-webkit-border-bottom-left-radius:5px;
-	-moz-border-radius-bottomright:5px;
-	-moz-border-radius-bottomleft:5px;
-	border-bottom-right-radius:5px;
-	border-bottom-left-radius:5px;
 	overflow:hidden;
 	margin-bottom:20px;
 	padding:0
@@ -64,6 +49,12 @@ h3.panel-header-blue.short {
 
 @media only screen and (max-width: 768px) {
 	h3.panel-header-blue{font-size:.9em}
+}
+
+#map_canvas {
+	width: 98%;
+	height: 450px;
+	background-color: #CCC;
 }
 
 /* Meus estilos */

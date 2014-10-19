@@ -10,46 +10,46 @@
 </head>
 <body>
 
+    <!-- barra superior -->
     <div class="row">
-        <div class="medium-3 small-12 columns">
-            <h1><a href="/acidentes/"><img src="{% static "acidentes/images/logo.png" %}"/></a></h1>
-        </div>
-        <div class="medium-9 small-12 columns">
+        <div class="small-12 columns barra-superior">
             <ul class="inline-list right">
                 <li><a href="voce_sabia">Saiba mais</a></li>
                 <li><a href="equipe">Equipe</a></li>
             </ul>
         </div>
-    </div>
+    </div><!-- fim da barra superior -->
 
     <div class="row">
-        <div class="small-12 medium-9 push-3 columns">
-            <!-- begin of content block -->
-            {% block conteudo %}
-            
-            {% endblock conteudo %}
-            <!-- end of content block -->
+        <!-- logotipo do site -->
+        <div class="small-12 medium-3 columns">
+            <h1><a href="/acidentes/"><img src="{% static "acidentes/images/logo.png" %}"/></a></h1>
+
+            <div class="row">
+                <!-- menu da barra lateral -->
+                <div class="small-12 columns">
+                    <h3 class="panel-header-blue short">
+                        Funções
+                    </h3>
+                    <ul class="side-nav panel-bg">
+                        <li><a href="/acidentes/">Início</a></li>
+                        <li><a href="/acidentes/compara_estados">Comparativo entre UFs</a></li>
+                        <li><a href="/acidentes/compara_pais">Comparativo de UF com o Brasil</a></li>
+                        <li><a href="/acidentes/regiao_pais">Comparativo de região com o Brasil</a></li>
+                        <li><a href="/acidentes/evolucao_regioes">Comparativo entre regiões</a></li>
+                        <li><a href="/acidentes/evolucao_brasil">Evolução dos acidentes no Brasil</a></li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
 
-        <!-- menu da barra lateral -->
-        <div class="medium-3 small-12 pull-9 columns">
-            <h3 class="panel-header-blue short">
-                Funções
-            </h3>
-            <ul class="side-nav panel-bg">
-                <li><a href="/acidentes/">Início</a></li>
-                <li><a href="/acidentes/compara_estados">Comparativo entre UFs</a></li>
-                <li><a href="/acidentes/compara_pais">Comparativo de UF com o Brasil</a></li>
-                <li><a href="/acidentes/regiao_pais">Comparativo de região com o Brasil</a></li>
-                <li><a href="/acidentes/evolucao_regioes">Comparativo entre regiões</a></li>
-                <li><a href="/acidentes/evolucao_brasil">Evolução dos acidentes no Brasil</a></li>
-                <!--
-                <li><a href="#">Section 3</a></li>
-                <li><a href="#">Section 4</a></li>
-                <li><a href="#">Section 5</a></li>
-                <li><a href="#">Section 6</a></li>
-                -->
-            </ul>
+        <!-- bloco do conteúdo -->
+        <div class="small-12 medium-9 columns">
+            <!-- begin of content block -->
+            {% block conteudo %}
+            {% endblock conteudo %}
+            <!-- end of content block -->
         </div>
     </div>
 
