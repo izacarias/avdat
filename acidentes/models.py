@@ -51,6 +51,7 @@ class SeriesPais(models.Model):
     pais = models.ForeignKey(Pais)
     ano = models.IntegerField(default=0)
     acidentes = models.DecimalField(max_digits=5, decimal_places=2)
+    pib = models.DecimalField(max_digits=17, decimal_places=2)
 
     class Meta:
         verbose_name = 'Série de dados por país'

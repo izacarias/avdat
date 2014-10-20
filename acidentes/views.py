@@ -273,46 +273,43 @@ def evolucao_brasil(request):
     series_pais = DataPool(
         series=[{
             'options': {'source': brasil_indices},
-            'terms':[{'ano_brasil': 'ano'}, {'Brasil': 'acidentes'}]
+            'terms':['ano', 'acidentes', 'pib']
         }]
     )
     # cria o objeto gráfico
     series_pais_chart = Chart(datasource = series_pais,
-        series_options = [{
+        series_options = [
+        {
             'options':{
               'type': 'column',
-              'stacking': False,
+              'xAxis': 0,
+              'yAxis': 0,
+              'zIndex': 0,
             },
             'terms': {
-              'ano_brasil': ['Brasil']
+              'ano': ['acidentes']
+            }
+        }, {
+            'options':{
+                'type': 'line',
+                'xAxis': 1,
+                'yAxis': 1,
+                'zIndex': 1,
+            },
+            'terms': {
+                'ano': ['pib']
             }
         }],
         chart_options = {
-            'chart': {
-                'options3d': {
-                    'enabled': True,
-                    'alpha': 5,
-                    'beta':  15,
-                    'depth': 70
-                },
-            },
-            'plotOptions': {
-                'column': {
-                    'depth': 25
-                }
-            },
             'title': {
                'text': 'Evolução dos índices nacionais'
             },
             'legend': {
-                'enabled': False
+                'enabled': True,
             },
             'xAxis': {
                 'title': {'text': 'Ano'}
             },
-            'yAxis': {
-                'title': {'text': 'Acidentes (por 1000 segurados)'}
-            }
     })
     # renderiza a view
     return render_to_response('acidentes/evolucao_brasil.html', RequestContext(request, 
