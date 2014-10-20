@@ -1,3 +1,10 @@
+/*
+Cor1: #082136  8- 33- 54
+Cor2: #00294D  0- 41- 77
+Cor3: #004B8D  0- 75-141
+Cor4: #0068C4  0-104-196
+Cor5: #2998FF 41-152-255
+*/
 body {
 	font-family:'Ubuntu', sans-serif;-webkit-font-smoothing:antialiased;
 	background:#fcfefc;
@@ -16,8 +23,8 @@ body {
 h3.panel-header-blue {
 	line-height:60px;
 	margin:1em 0 0 0;
-	background-color:#24B2EE;
-	background:rgba(36,178,238,0.77);
+	background-color:#00294D;
+	background:rgba(0,41,77,1);
 	width:100%;
 	font-size:1.1em;
 	color:#FFF;
