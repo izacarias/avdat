@@ -307,9 +307,14 @@ def evolucao_brasil(request):
             'legend': {
                 'enabled': True,
             },
-            'xAxis': {
-                'title': {'text': 'Ano'}
-            },
+            'yAxis': [
+                {'lineWidth': 1,
+                 'title': {'text': 'Acidentes por 1000 segurados'}
+                }, 
+                {'lineWidth': 1,
+                 'title': {'text': 'PIB em Reais'},
+                }
+            ],
     })
     # renderiza a view
     return render_to_response('acidentes/evolucao_brasil.html', RequestContext(request, 
