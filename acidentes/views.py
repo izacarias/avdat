@@ -37,6 +37,23 @@ def index(request):
     return render_to_response('acidentes/index.html', RequestContext(request, 
         {'anos':anos, 'ano_solicitado':ano_solicitado, 'indices_json': indices_json}))
 
+def heatmap_regioes(request):
+    # necessário para CSRF token
+    c = {}
+    c.update(csrf(request))
+    # busca todos os anos com dados
+    anos = SeriesRegioes.objects.values('ano').distinct().order_by('-ano')
+    # pega o ano solicitado ou o mais atual
+    if request.method == 'POST':
+        ano_solicitado = request.POST.get('ano')
+    else:
+        ano_solicitado = anos[0].get('ano')
+    # busca dos dados do ano
+    dict_indicies = (SeriesRegioes.objects.values('regiao__latitude', 'regiao__longitude' , 'acidentes').filter(ano=ano_solicitado))
+    indices_json = simplejson.dumps(list(dict_indicies))
+    return render_to_response('acidentes/heatmap_regioes.html', RequestContext(request, 
+        {'anos':anos, 'ano_solicitado':ano_solicitado, 'indices_json': indices_json}))
+
 def compara_estados(request):
     # necessário para CSRF token
     c = {}
