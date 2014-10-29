@@ -1,0 +1,76 @@
+{% extends "acidentes/base.html" %}
+{% load staticfiles %}
+
+{% block conteudo %}
+			<h3>Mapa de acidentes <small>Mapa de calor dos acidentes por região em {{ano_solicitado}}</small></h3>
+            <div class="row">
+                <form action="/acidentes/heatmap_regioes" method="post">
+                    <div class="small-3 medium-1 columns">
+                        <label for="ano" class="right inline">Ano</label>
+                    </div>
+                    <div class="small-6 medium-4 columns">
+                        <select name="ano">
+                            {% for ano in anos %}
+                            <option value="{{ano.ano}}"{% if ano.ano|slugify == ano_solicitado %} selected="selected"{% endif %}>{{ano.ano}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="small-3 medium-4 columns end">
+                        <button type="submit" class="button radius tiny">Visualizar</button>
+                    </div>
+                    {% csrf_token %}
+                </form>
+            </div>
+            <div class="row">
+                <div id="map_canvas" class="small-12 columns">
+                <!-- placeholder for google maps -->
+                </div>
+            </div>
+{% endblock conteudo %}
+
+{% block page_js %}
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="{% static "acidentes/js/sha512.js" %}"></script> 
+    <script type="text/javascript" src="{% static "acidentes/js/forms.js" %}"></script> 
+    <script type="text/javascript" src="{% static "acidentes/js/heatmap.js" %}"></script>
+    <script type="text/javascript" src="{% static "acidentes/js/gmaps-heatmap.js" %}"></script>
+    <script>
+        $(document).foundation();
+        var myLatlng = new google.maps.LatLng(-15.2, -49.800219);
+        function initialize() {
+            var mapCanvas = document.getElementById('map_canvas');
+            var mapOptions = {
+                center: myLatlng,
+                minZoom: 3, 
+                maxZoom: 5,
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+            heatmap = new HeatmapOverlay(map, {
+    			// radius should be small ONLY if scaleRadius is true (or small radius is intended)
+			    "radius": 5.5,
+			    "maxOpacity": 1, 
+			    // scales the radius based on map zoom
+			    "scaleRadius": true, 
+			    // if set to false the heatmap uses the global maximum for colorization
+			    // if activated: uses the data maximum within the current map boundaries 
+			    //   (there will always be a red spot with useLocalExtremas true)
+			    "useLocalExtrema": true,
+			    // which field name in your data represents the latitude - default "lat"
+			    latField: 'regiao__latitude',
+			    // which field name in your data represents the longitude - default "lng"
+			    lngField: 'regiao__longitude',
+			    // which field name in your data represents the data value - default "value"
+			    valueField: 'acidentes'
+			});
+			var testData = {
+				max: 22.5,
+				data: {{ indices_json|safe }}
+			};
+			heatmap.setData(testData);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+{% endblock page_js %}

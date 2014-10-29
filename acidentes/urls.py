@@ -4,6 +4,7 @@ from acidentes import views
 
 urlpatterns = patterns('', 
     url(r'^$', views.index, name='index'),
+    url(r'^heatmap_regioes', views.heatmap_regioes, name='heatmap_regioes'),
     url(r'^evolucao_brasil', views.evolucao_brasil, name='evolucao_brasil'),
     url(r'^evolucao_regioes', views.evolucao_regioes, name='evolucao_regioes'),
     url(r'^regiao_pais', views.regiao_pais, name='regiao_pais'),

@@ -15,6 +15,8 @@ class Pais(models.Model):
 
 class Regiao(models.Model):
     nome = models.CharField(max_length=50)
+    latitude = models.DecimalField(max_digits=5, decimal_places=2)
+    longitude = models.DecimalField(max_digits=5, decimal_places=2)
     
     def __unicode__(self):
         return self.nome
