@@ -1,0 +1,17 @@
+{% extends "acidentes/base.html" %}
+{% load staticfiles %}
+
+{% block conteudo %}
+            <h3>Vídeo explicativo das do aplicativo</h3>
+            <div class="row">
+                <div id="video-youtube" class="small-12 columns">
+                <iframe width="560" height="315" src="//www.youtube.com/embed/vQW7tXVRwio?rel=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+{% endblock conteudo %}
+
+{% block page_js %}
+    <script>
+    $(document).foundation();
+    </script>
+{% endblock page_js %}

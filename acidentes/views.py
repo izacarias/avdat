@@ -19,6 +19,9 @@ def voce_sabia(request):
 def equipe(request):
     return render_to_response('acidentes/equipe.html')
 
+def video(request):
+    return render_to_response('acidentes/video.html')
+
 # páginas dinâmicas
 def index(request):
     # necessário para CSRF token
